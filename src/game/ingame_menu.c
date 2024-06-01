@@ -1801,6 +1801,19 @@ void render_pause_castle_course_stars(s16 x, s16 y, s16 fileIndex, s16 courseInd
     print_generic_string(x + 14, y + 13, str);
 }
 
+#if defined(DEBUG_MARIO_COLLIDER) && defined(PUPPYPRINT_DEBUG)
+
+#ifdef ENABLE_RAYCAST_MARIO_STEP
+#define COLLIDER_NAME "RAYCAST"
+#else
+#define COLLIDER_NAME "VANILLA"
+#endif
+
+void render_mario_collider_info(void) {
+    print_small_text(315, 227, "MARIO COLLIDER: " COLLIDER_NAME, PRINT_TEXT_ALIGN_RIGHT, PRINT_ALL, FONT_OUTLINE);
+}
+#endif
+
 void render_pause_castle_main_strings(s16 x, s16 y) {
     void **courseNameTbl = segmented_to_virtual(languageTable[gInGameLanguage][1]);
 
@@ -1955,6 +1968,9 @@ s32 render_pause_courses_and_castle(void) {
     }
 
     puppycam_render_option_text();
+#endif
+#if defined(DEBUG_MARIO_COLLIDER) && defined(PUPPYPRINT_DEBUG)
+    render_mario_collider_info();
 #endif
     return MENU_OPT_NONE;
 }
